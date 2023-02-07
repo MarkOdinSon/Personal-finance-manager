@@ -12,17 +12,18 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_02_07_160759) do
   create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
+    t.string "name", null: false
+    t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "operations", force: :cascade do |t|
-    t.string "otype"
-    t.decimal "amount"
-    t.datetime "odate"
-    t.string "description"
+    t.string "otype", null: false
+    t.decimal "amount", null: false
+    t.datetime "odate", null: false
+    t.string "description", null: false
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

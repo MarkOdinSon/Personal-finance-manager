@@ -76,3 +76,6 @@ end
 group :production do
   gem 'pg'
 end
+
+# for deploying on Fly.io
+# gem "dockerfile-rails", ">= 1.0", :group => :development
