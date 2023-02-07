@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
+  id: 1
+  name: Харчування
+  description: Витрати на продукти харчування
 
 two:
-  name: MyString
-  description: MyString
+  id: 2
+  name: Комуналка
+  description: Витрати на оплату комуналки

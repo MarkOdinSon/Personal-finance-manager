@@ -20,7 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_160759) do
   end
 
   create_table "operations", force: :cascade do |t|
-    t.string "otype", null: false
     t.decimal "amount", null: false
     t.datetime "odate", null: false
     t.string "description", null: false

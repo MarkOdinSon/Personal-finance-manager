@@ -1,4 +1,4 @@
-# Personal finance manager on Rials
+# Personal finance manager on Rails
 - only for local using
 - only for one user
 - without user auth <br>
