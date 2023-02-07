@@ -1,0 +1,32 @@
+<div id="<%= dom_id operation %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Otype:</strong>
+    <%= operation.otype %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Amount:</strong>
+    <%= operation.amount %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Odate:</strong>
+    <%= operation.odate %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= operation.description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Category:</strong>
+    <%= operation.category_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this operation", operation, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this operation', edit_operation_path(operation), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
