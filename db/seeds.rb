@@ -1,7 +1,57 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+require 'faker'
+
+# This is not related to categories but I need to add a lot of entries to demonstrate search and pagination
+
+50.times do
+  begin
+    Category.create!([{
+                        name: Faker::Food.dish,
+                        description: 'Some category description ...'
+                      }
+                     ])
+  rescue
+
+  end
+
+end
+
+50.times do
+  begin
+    Category.create!([{
+                        name: Faker::Tea.variety,
+                        description: 'Some category description ...'
+                      }
+                     ])
+  rescue
+
+  end
+
+end
+
+50.times do
+  begin
+    Category.create!([{
+                        name: Faker::Dessert.variety,
+                        description: 'Some category description ...'
+                      }
+                     ])
+  rescue
+
+  end
+
+end
+
+50.times do
+  begin
+    Category.create!([{
+                        name: Faker::Coffee.blend_name,
+                        description: 'Some category description ...'
+                      }
+                     ])
+  rescue
+
+  end
+
+end
+
+puts "Created #{Category.count} Categories"
