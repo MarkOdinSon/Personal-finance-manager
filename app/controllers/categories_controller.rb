@@ -3,20 +3,26 @@ class CategoriesController < ApplicationController
 
   # GET /categories or /categories.json
   def index
+    @pageTitle = 'Your categories'
+
     @categories = Category.all
   end
 
   # GET /categories/1 or /categories/1.json
   def show
+    @pageTitle = "Category #{@category.id}"
   end
 
   # GET /categories/new
   def new
+    @pageTitle = 'New category'
+
     @category = Category.new
   end
 
   # GET /categories/1/edit
   def edit
+    @pageTitle = "Edit category #{@category.id}"
   end
 
   # POST /categories or /categories.json
@@ -49,6 +55,8 @@ class CategoriesController < ApplicationController
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
+    # If the user decides to delete a category, then all operations that belong to this category will also be deleted.
+    Operation.delete(Operation.where(category_id: @category.id).ids)
     @category.destroy
 
     respond_to do |format|

@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PersonalFinanceManagerRoot</title>
+    <% unless @pageTitle.nil? %>
+      <title>
+        <%= @pageTitle %>
+      </title>
+    <% else %>
+      <title>
+        Personal finance manager
+      </title>
+    <% end %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%= favicon_link_tag asset_path('android-chrome-512x512.png') %>
+
+    <!--Tailwindcss-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--Flowbite-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.turbo.min.js"></script>
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <!--Navbar-->
+    <%= render 'layouts/navbar' %>
+
+    <main class="mx-auto mb-auto container my-2 px-2 min-h-screen">
       <%= yield %>
     </main>
+
+  <!--This is footer-->
+  <footer class="bg-gray-700 text-center lg:text-left">
+    <div class="text-gray-100 text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright:
+      <a class="text-gray-100" href="#">Mark Hladkov</a>
+    </div>
+  </footer>
   </body>
 </html>

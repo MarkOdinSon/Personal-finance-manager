@@ -3,20 +3,26 @@ class OperationsController < ApplicationController
 
   # GET /operations or /operations.json
   def index
+    @pageTitle = 'Your operations'
+
     @operations = Operation.all
   end
 
   # GET /operations/1 or /operations/1.json
   def show
+    @pageTitle = "Operation #{@operation.id}"
   end
 
   # GET /operations/new
   def new
+    @pageTitle = 'New operation'
+
     @operation = Operation.new
   end
 
   # GET /operations/1/edit
   def edit
+    @pageTitle = "Edit operation #{@operation.id}"
   end
 
   # POST /operations or /operations.json
