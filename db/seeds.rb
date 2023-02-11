@@ -6,7 +6,7 @@ require 'faker'
   begin
     Category.create!([{
                         name: Faker::Food.dish,
-                        description: 'Some category description ...'
+                        description: Faker::Alphanumeric.alpha(number: 10)
                       }
                      ])
   rescue
@@ -19,7 +19,7 @@ end
   begin
     Category.create!([{
                         name: Faker::Tea.variety,
-                        description: 'Some category description ...'
+                        description: Faker::Alphanumeric.alpha(number: 10)
                       }
                      ])
   rescue
@@ -28,24 +28,11 @@ end
 
 end
 
-50.times do
+100.times do
   begin
     Category.create!([{
                         name: Faker::Dessert.variety,
-                        description: 'Some category description ...'
-                      }
-                     ])
-  rescue
-
-  end
-
-end
-
-50.times do
-  begin
-    Category.create!([{
-                        name: Faker::Coffee.blend_name,
-                        description: 'Some category description ...'
+                        description: Faker::Alphanumeric.alpha(number: 10)
                       }
                      ])
   rescue
@@ -55,3 +42,20 @@ end
 end
 
 puts "Created #{Category.count} Categories"
+
+100.times do
+  begin
+    Operation.create!([{
+                        amount: rand(5.0...10000.0).round(2),
+                        odate: Faker::Date.between(from: '2019-06-01', to: '2023-01-01'),
+                        description: Faker::Alphanumeric.alpha(number: 10),
+                        category: Category.offset(rand(Category.count)).first
+                      }
+                     ])
+  rescue
+
+  end
+
+end
+
+puts "Created #{Operation.count} Operations"

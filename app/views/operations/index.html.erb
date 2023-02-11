@@ -4,11 +4,139 @@
   <% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Operations</h1>
+    <h1 class="font-bold text-4xl my-5">Operations</h1>
     <%= link_to 'New operation', new_operation_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="operations" class="min-w-full">
-    <%= render @operations %>
-  </div>
+  <%= form_tag "/operations", method: :get do %>
+    <div class="flex items-center">
+      <%= text_field_tag(:filter_operations_by_category_name, params[:filter_operations_by_category_name], id: "filter_operations_by_category_name_field", class: "w-full block h-12 z-20 text-sm text-gray-900 bg-gray-50 border-gray-300", placeholder: "Category name...") %>
+      <%= submit_tag "Search", class: "rounded-r-lg p-3 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+    <a class="p-1 bg-red-600 text-white px-3 inline-block text-sm cursor-pointer rounded-b-lg" href="/operations">Reset</a>
+    <b><%= @operations.total_count %></b> record(s)
+  <% end %>
+
+  <% if @operations.total_count != 0 %>
+
+    <div class="my-2 text-center z-10 px-3 py-2 leading-tight dark:border-gray-700 dark:text-white">
+      <%= paginate @operations %>
+    </div>
+
+    <div id="operations" class="min-w-full">
+
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              <div class="flex items-center">
+                ID
+
+                <!--Sort Operations by id Ascending or Descending-->
+                <% if request[:idSort] != 'Ascending' && request[:idSort] != 'Descending' %>
+                  <a href="/operations?idSort=Descending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                <% else %>
+                  <% if request[:idSort] == 'Descending' %>
+                    <a href="/operations?idSort=Ascending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% else %>
+                    <a href="/operations?idSort=Descending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% end %>
+                <% end %>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-3">
+              <div class="flex items-center">
+                Amount
+
+                <!--Sort Operations by amount Ascending or Descending-->
+                <% if request[:amountSort] != 'Ascending' && request[:amountSort] != 'Descending' %>
+                  <a href="/operations?amountSort=Descending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                <% else %>
+                  <% if request[:amountSort] == 'Descending' %>
+                    <a href="/operations?amountSort=Ascending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% else %>
+                    <a href="/operations?amountSort=Descending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% end %>
+                <% end %>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-3">
+              <div class="flex items-center">
+                Odate
+
+                <!--Sort Operations by id Ascending or Descending-->
+                <% if request[:odateSort] != 'Ascending' && request[:odateSort] != 'Descending' %>
+                  <a href="/operations?odateSort=Descending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                <% else %>
+                  <% if request[:odateSort] == 'Descending' %>
+                    <a href="/operations?odateSort=Ascending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% else %>
+                    <a href="/operations?odateSort=Descending"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% end %>
+                <% end %>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-3">
+              <div class="flex items-center">
+                Category
+
+                <!--Sort Operations by id Ascending or Descending-->
+                <% if request[:operationsByCategorySort] != 'AlphabeticallyReversed' && request[:operationsByCategorySort] != 'Alphabetically' %>
+                  <a href="/operations?operationsByCategorySort=AlphabeticallyReversed"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                <% else %>
+                  <% if request[:operationsByCategorySort] == 'AlphabeticallyReversed' %>
+                    <a href="/operations?operationsByCategorySort=Alphabetically"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% else %>
+                    <a href="/operations?operationsByCategorySort=AlphabeticallyReversed"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                  <% end %>
+                <% end %>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-3">
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+
+            <%= render @operations %>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="my-2 text-center z-10 px-3 py-2 leading-tight dark:border-gray-700 dark:text-white">
+      <%= paginate @operations %>
+    </div>
+
+  <% end %>
+
 </div>
+
+<script type="text/javascript">
+    paginators = document.getElementsByClassName('page current')
+    paginators[0].style.color = "blue"; paginators[0].style.fontSize = "115%";
+    paginators[1].style.color = "blue"; paginators[1].style.fontSize = "115%";
+</script>
+
+<!--Search hint by title jQuery-ui-->
+<!--Not awesome but works-->
+<script type="text/javascript">
+    $(function() {
+        $( "#filter_operations_by_category_name_field" ).autocomplete({
+            source: [ <% @array_of_category_names.length.times do |t| %>"<%= @array_of_category_names.at(t) %>", <% end %>],
+        })
+    })
+</script>
+
+<script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+<link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
+
+<script type="text/javascript">
+    new SlimSelect({
+        select: '#filter_operations_by_category_name_field'
+    })
+</script>
+

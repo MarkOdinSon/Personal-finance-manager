@@ -9,3 +9,8 @@ two:
   id: 2
   name: Комуналка
   description: Витрати на оплату комуналки
+
+three:
+  id: 3
+  name: Medications
+  description: Expenses for payment of medicine

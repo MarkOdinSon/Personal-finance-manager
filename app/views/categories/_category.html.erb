@@ -4,9 +4,7 @@
       <%= category.id %>
     </th>
     <td class="px-6 py-4">
-      <% if action_name != "show" %>
-        <%= link_to category.name, category, class: "text-lg text-blue-500" %>
-      <% end %>
+      <%= link_to category.name, category, class: "text-lg text-blue-500" %>
     </td>
     <td class="px-6 py-4">
       <%= category.description %>

@@ -26,7 +26,9 @@ class OperationTest < ActiveSupport::TestCase
   end
 
   context 'scope(methods) testing' do
-
+    should 'be able to search operations by category name using scope' do
+      assert_equal(590.95, Operation.search_by_category_name_scope('Medications').pluck(:amount)[0])
+    end
   end
 
   context 'relationship (associations) testing' do

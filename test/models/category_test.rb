@@ -25,7 +25,9 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   context 'scope(methods) testing' do
-
+    should 'be able to search categories by name using scope' do
+      assert_equal('Medications', Category.search_by_category_name_scope('Medications').pluck(:name)[0])
+    end
   end
 
   context 'relationship (associations) testing' do

@@ -10,6 +10,7 @@ class CategoriesController < ApplicationController
 
     nameSort = params[:nameSort]
     idSort = params[:idSort]
+
     category_name = params[:search_by_category_name]
 
     if category_name != '' && !category_name.nil?
