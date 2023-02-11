@@ -5,7 +5,27 @@ class CategoriesController < ApplicationController
   def index
     @pageTitle = 'Your categories'
 
-    @categories = Category.all.order(id: :desc).page(params[:page])
+    # array of category names for jQuery search field
+    @array_of_category_names = Category.pluck(:name)
+
+    nameSort = params[:nameSort]
+    idSort = params[:idSort]
+    category_name = params[:search_by_category_name]
+
+    if category_name != '' && !category_name.nil?
+      return @categories = Category.search_by_category_name_scope(category_name).page(params[:page])
+    end
+
+    return @categories = Category.all.order(:name).page(params[:page]) if nameSort == 'Alphabetically'
+
+    return @categories = Category.all.order(name: :desc).page(params[:page]) if nameSort == 'AlphabeticallyReversed'
+
+    return @categories = Category.all.order(:id).page(params[:page]) if idSort == 'Ascending'
+
+    return @categories = Category.all.order(id: :desc).page(params[:page]) if idSort == 'Descending'
+
+    # by Default ordered by name Alphabetically
+    @categories = Category.all.order(:name).page(params[:page])
   end
 
   # GET /categories/1 or /categories/1.json
