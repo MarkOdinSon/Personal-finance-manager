@@ -5,7 +5,7 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     @operation = operations(:one)
   end
 
-  test "should get index" do
+  test "should get index.html.erb" do
     get operations_url
     assert_response :success
   end

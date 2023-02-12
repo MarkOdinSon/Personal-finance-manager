@@ -5,7 +5,7 @@ class OperationsTest < ApplicationSystemTestCase
     @operation = operations(:one)
   end
 
-  test "visiting the index" do
+  test "visiting the index.html.erb" do
     visit operations_url
     assert_selector "h1", text: "Operations"
   end

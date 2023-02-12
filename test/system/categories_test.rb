@@ -5,7 +5,7 @@ class CategoriesTest < ApplicationSystemTestCase
     @category = categories(:one)
   end
 
-  test "visiting the index" do
+  test "visiting the index.html.erb" do
     visit categories_url
     assert_selector "h1", text: "Categories"
   end

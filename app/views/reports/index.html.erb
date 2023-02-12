@@ -1,0 +1,20 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl my-5">Reports</h1>
+  </div>
+
+  <!--action attribute depends on formaction of buttons-->
+  <%= form_tag '',method: :get do %>
+    <div class="flex-wrap pr-5">
+      <%= date_field_tag(:start_odate, params[:start_odate], required: true, class: "m-4 w-1/2 block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full") %>
+      <%= date_field_tag(:end_odate, params[:end_odate], required: true, class: "m-4 w-1/2 block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full") %>
+      <button class="m-2 rounded-lg py-1 px-3 bg-blue-600 text-white inline-block font-medium cursor-pointer" type="submit" formaction="/reports/report_by_category">By category</button>
+      <button class="m-2 rounded-lg py-1 px-3 bg-blue-600 text-white inline-block font-medium cursor-pointer" type="submit" formaction="/reports/report_by_dates">By dates</button>
+    </div>
+  <% end %>
+
+</div>
