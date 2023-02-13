@@ -8,7 +8,11 @@ class ReportsController < ApplicationController
   def report_by_category
     @pageTitle = 'Report by category'
 
-    @array_of_category = Category.limit(10).pluck(:name)
+    Operation.report_by_category_method(params[:start_odate], params[:end_odate])
+
+    Operation.report_by_category_method('2019-01-01', '2022-01-01')
+
+
 
   end
 
