@@ -1,9 +1,24 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<%= render partial: 'reports/report', locals: { name_of_report: @pageTitle } %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl my-5">Reports by category</h1>
-  </div>
-</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        const ctx = document.getElementById('myChartReport');
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Red',
+                    'Blue',
+                    'Yellow',
+                    'Gray'
+                ],
+                datasets: [{
+                    label: 'Report by category',
+                    data: [300, 50, 10000, 5000.50],
+                    hoverOffset: 4
+                }]
+            }
+        });
+    });
+</script>

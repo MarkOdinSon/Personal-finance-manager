@@ -1,3 +1,7 @@
+<!--Slimselect-->
+<script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+<link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
+
 <%= form_with(model: operation, class: "contents") do |form| %>
   <% if operation.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
@@ -37,7 +41,9 @@
 <% end %>
 
 <script type="text/javascript">
-    new SlimSelect({
-        select: '#selectCategory'
-    })
+    $(document).ready(function() {
+      new SlimSelect({
+          select: '#selectCategory'
+      })
+    });
 </script>
