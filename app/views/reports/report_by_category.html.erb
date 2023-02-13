@@ -1,24 +1,42 @@
-<%= render partial: 'reports/report', locals: { name_of_report: @pageTitle } %>
+<%= render partial: 'reports/report', locals: { name_of_report: @pageTitle, records: @records_report_by_category } %>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    function chartJS(maintainAspectRatio_value) {
         const ctx = document.getElementById('myChartReport');
 
         new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: [
-                    'Red',
-                    'Blue',
-                    'Yellow',
-                    'Gray'
+                    <% @records_report_by_category.keys.each do |category_name| %>
+                    '<%= category_name %>',
+                    <% end %>
                 ],
                 datasets: [{
                     label: 'Report by category',
-                    data: [300, 50, 10000, 5000.50],
-                    hoverOffset: 4
+                    data:
+                      [
+                          <% @records_report_by_category.values.each do |amount_sum| %>
+                          <%= amount_sum %>,
+                          <% end %>
+                      ],
                 }]
+            },
+            options: {
+                maintainAspectRatio: maintainAspectRatio_value
             }
         });
-    });
+    }
+</script>
+
+<script type=text/javascript>
+    if ($(window).width() < 1050) {
+        chartJS(false)
+        document.getElementById('div_with_myChartReport').style.width = '100%';
+        document.getElementById('div_with_myChartReport').style.height = '950px';
+    }
+    else
+    {
+        chartJS(true)
+    }
 </script>

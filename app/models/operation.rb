@@ -14,9 +14,10 @@ class Operation < ApplicationRecord
   private
 
   # report by category for a certain period of time
+  # start_date = '2019-01-01' & end_date = '2020-01-01'
   def self.report_by_category_method(start_date, end_date)
 
-    Operation.joins(:category).where('odate BETWEEN ? AND ?', '2019-01-01', '2020-01-01').group(:name).sum(:amount)
+    Operation.joins(:category).where('odate BETWEEN ? AND ?', start_date.to_s, end_date.to_s).group(:name).sum(:amount)
 
     # Others realizations of this method
 
@@ -38,7 +39,7 @@ class Operation < ApplicationRecord
     #       FROM operations
     #       INNER JOIN categories
     #         ON operations.category_id == categories.id
-    #       WHERE operations.odate BETWEEN '2019-01-01' AND '2020-01-01'
+    #       WHERE operations.odate BETWEEN '#{start_date}' AND '#{start_date}'
     #       GROUP BY categories.name"
 
     ## ActiveRecord::Base.connection.execute(sql) - Command to run sql1 or sql2

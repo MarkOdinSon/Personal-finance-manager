@@ -6,13 +6,17 @@ class ReportsController < ApplicationController
   end
 
   def report_by_category
-    @pageTitle = 'Report by category'
+    @pageTitle = 'Report by category for a specified period'
 
-    Operation.report_by_category_method(params[:start_odate], params[:end_odate])
+    begin
+      # check if it is a valid date
+      DateTime.parse params[:start_odate]
+      DateTime.parse params[:end_odate]
 
-    Operation.report_by_category_method('2019-01-01', '2022-01-01')
-
-
+      @records_report_by_category = Operation.report_by_category_method(params[:start_odate], params[:end_odate])
+    rescue
+      redirect_to '/reports', notice: 'Dates are incorrect! Correct format is like: 01-01-2022'
+    end
 
   end
 

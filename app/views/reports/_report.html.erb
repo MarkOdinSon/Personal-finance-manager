@@ -1,15 +1,74 @@
-<div class="w-full">
+<div class="w-full mb-5">
 
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl my-5"><%= name_of_report %></h1>
+  <div class="text-center">
+    <h1 class="font-bold text-2xl my-5"><%= name_of_report %></h1>
   </div>
 
-  <div class="h-screen flex justify-center m-3 p-5">
-    <canvas id="myChartReport"></canvas>
-  </div>
+  <% if records.count > 0 %>
+
+    <div class="text-center">
+      <h1 class="text-1xl my-5">start date: <%= params[:start_odate] %></h1>
+      <h1 class="text-1xl my-5">end date: <%= params[:end_odate] %></h1>
+    </div>
+
+    <hr class="m-3">
+
+    <!--Table-->
+
+    <div class="flex flex-wrap justify-center">
+      <div>
+        <table class="text-sm text-left text-gray-500 dark:text-gray-400 max-w-xs">
+          <thead class="text-lg text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Sum
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <% records.keys.each do |category| %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="px-6 py-4 text-lg">
+                  <%= category %>
+                </td>
+                <td class="px-6 py-4 text-lg">
+                  <%= records[category] %>
+                </td>
+            </tr>
+          <% end %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4 text-2xl">
+              <b>Total:</b>
+            </td>
+            <td class="px-6 py-4 text-xl">
+              <b><%= records.values.sum.to_f %></b>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--Table end-->
+
+      <div class="flex w-4/6" id="div_with_myChartReport">
+         <canvas id="myChartReport"></canvas>
+      </div>
+
+    </div>
+
+  <% else %>
+
+    <div class="text-center">
+      <h1 class="font-bold text-4xl my-5">Records not found</h1>
+      <p>This means that no operations were found in the specified time period. Try entering a different period.</p>
+    </div>
+
+  <% end %>
 
 </div>
