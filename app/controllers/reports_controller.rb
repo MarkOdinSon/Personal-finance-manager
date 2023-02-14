@@ -23,5 +23,6 @@ class ReportsController < ApplicationController
   def report_by_dates
     @pageTitle = 'Report by dates'
 
+    @records_report_by_dates = Operation.report_by_dates_method(params[:start_odate], params[:end_odate], params[:datesReportType])
   end
 end

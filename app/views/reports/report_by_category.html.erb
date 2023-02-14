@@ -1,11 +1,93 @@
-<%= render partial: 'reports/report', locals: { name_of_report: @pageTitle, records: @records_report_by_category } %>
+<!--Report content-->
+<div class="w-full mb-5">
+
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="text-center">
+    <h1 class="font-bold text-2xl my-5"><%= @pageTitle %></h1>
+  </div>
+
+  <div class="container text-center">
+    <%= form_tag '/reports/report_by_category',method: :get do %>
+      <div class="flex flex-wrap justify-center items-center">
+        <%= date_field_tag(:start_odate, params[:start_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
+        <%= date_field_tag(:end_odate, params[:end_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
+        <button class="rounded-lg p-2 bg-blue-600 h-full text-white inline-block font-medium cursor-pointer" type="submit" formaction="/reports/report_by_category">Get a report</button>
+        <button type="button" class="m-2 rounded-lg p-1 bg-orange-500 h-full text-white inline-block font-medium cursor-pointer" onclick="changeTypeChartJS();">Switch type</button>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @records_report_by_category.count > 0 %>
+
+    <hr class="m-3">
+
+    <!--Table-->
+
+    <div class="flex flex-wrap justify-center">
+      <div>
+        <table class="text-sm text-left text-gray-500 dark:text-gray-400 max-w-xs">
+          <thead class="text-lg text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Sum
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @records_report_by_category.keys.each do |category| %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-6 py-4 text-lg">
+                <%= category %>
+              </td>
+              <td class="px-6 py-4 text-lg">
+                <%= @records_report_by_category[category] %>
+              </td>
+            </tr>
+          <% end %>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4 text-2xl">
+              <b>Total:</b>
+            </td>
+            <td class="px-6 py-4 text-xl">
+              <b><%= @records_report_by_category.values.sum.to_f %></b>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--Table end-->
+
+      <div class="flex w-4/6" id="div_with_myChartReport">
+        <canvas id="myChartReport"></canvas>
+      </div>
+
+    </div>
+
+  <% else %>
+
+    <div class="text-center">
+      <h1 class="font-bold text-4xl my-5">Records not found</h1>
+      <p>This means that no operations were found in the specified time period. Try entering a different period.</p>
+    </div>
+
+  <% end %>
+
+</div>
+
+<!--Scripts-->
 
 <script type="text/javascript">
-    function chartJS(maintainAspectRatio_value) {
+    function chartJS(maintainAspectRatio_value, chart_type = 'pie') {
         const ctx = document.getElementById('myChartReport');
 
-        new Chart(ctx, {
-            type: 'doughnut',
+        let MyChartJSVar = new Chart(ctx, {
+            type: chart_type,
             data: {
                 labels: [
                     <% @records_report_by_category.keys.each do |category_name| %>
@@ -13,7 +95,7 @@
                     <% end %>
                 ],
                 datasets: [{
-                    label: 'Report by category',
+                    label: 'Sum amount',
                     data:
                       [
                           <% @records_report_by_category.values.each do |amount_sum| %>
@@ -26,17 +108,35 @@
                 maintainAspectRatio: maintainAspectRatio_value
             }
         });
+        return MyChartJSVar
     }
+
+
 </script>
 
 <script type=text/javascript>
+    $chart_diagram_type = 'pie'
     if ($(window).width() < 1050) {
-        chartJS(false)
+        $chart = chartJS(false)
         document.getElementById('div_with_myChartReport').style.width = '100%';
         document.getElementById('div_with_myChartReport').style.height = '950px';
     }
     else
     {
-        chartJS(true)
+        $chart = chartJS(true)
     }
+
+    function changeTypeChartJS() {
+        $chart.destroy()
+        if ($chart_diagram_type == 'pie') {
+            $chart = chartJS(true, 'doughnut')
+            $chart_diagram_type = 'doughnut'
+        }
+        else
+        {
+            $chart = chartJS(true, 'pie')
+            $chart_diagram_type = 'pie'
+        }
+    }
+
 </script>

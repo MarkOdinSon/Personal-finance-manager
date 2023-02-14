@@ -9,6 +9,7 @@ class Operation < ApplicationRecord
   paginates_per 30 # default
 
   # search for operations for category name
+  # LOWER(name) now working with SQLite when it is ukrainian / rus alphabet cause SQLite not using Unicode. But psql uses Unicode
   scope :search_by_category_name_scope, ->(name) { Operation.where(category_id: Category.where('LOWER(name) LIKE ?', "%#{name.gsub('+', ' ').downcase}%").ids) }
 
   private
@@ -43,5 +44,41 @@ class Operation < ApplicationRecord
     #       GROUP BY categories.name"
 
     ## ActiveRecord::Base.connection.execute(sql) - Command to run sql1 or sql2
+  end
+
+  # report by dates for a certain period of time
+  # for example start_date = '2019-01-01' & end_date = '2019-01-06'
+  def self.report_by_dates_method(start_date, end_date, datesReportType = 'perDay')
+
+    operationsByDates = Operation.where('odate BETWEEN ? AND ?', start_date.to_s, end_date.to_s).order(:odate)
+
+    resultHashByDates = Hash.new
+
+
+    if datesReportType == 'perDay'
+      # per day
+      operationsByDates.each do |operation|
+       onlyOdate = operation.odate.to_date.to_s
+
+        if resultHashByDates[onlyOdate].nil?
+          resultHashByDates[onlyOdate] = operation.amount
+        else
+          resultHashByDates[onlyOdate] = resultHashByDates[onlyOdate] + operation.amount
+        end
+      end
+    else
+      # per month
+      operationsByDates.each do |operation|
+        monthAndYear = operation.odate.to_date.strftime("%B %Y") # return only month and year
+
+        if resultHashByDates[monthAndYear].nil?
+          resultHashByDates[monthAndYear] = operation.amount
+        else
+          resultHashByDates[monthAndYear] = resultHashByDates[monthAndYear] + operation.amount
+        end
+      end
+    end
+
+    return resultHashByDates
   end
 end

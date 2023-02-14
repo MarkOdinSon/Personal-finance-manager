@@ -7,3 +7,38 @@
     <h1 class="font-bold text-4xl my-5">Reports by dates</h1>
   </div>
 </div>
+
+<div class="flex " id="div_with_myChartReport">
+  <canvas id="myChartReportDates"></canvas>
+</div>
+
+<!--Scripts-->
+
+<script type="text/javascript">
+    function chartJSDates() {
+        const ctx = document.getElementById('myChartReportDates');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    <% @records_report_by_dates.keys.each do |day| %>
+                    '<%= day %>',
+                    <% end %>
+                ],
+                datasets: [{
+                    label: 'Sum amount per days',
+                    data: [
+                        <% @records_report_by_dates.values.each do |amount_per_day| %>
+                        <%= amount_per_day %>,
+                        <% end %>
+                    ],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+        });
+    }
+    chartJSDates()
+</script>
