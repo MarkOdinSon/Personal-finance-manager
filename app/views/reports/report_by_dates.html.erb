@@ -6,27 +6,25 @@
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl my-5"><%= @pageTitle %></h1>
   </div>
-</div>
 
-<div class="container text-center">
-  <%= form_tag '',method: :get do %>
-    <div class="flex flex-wrap justify-center items-center">
-      <%= date_field_tag(:start_odate, params[:start_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
-      <%= date_field_tag(:end_odate, params[:end_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
-      <%= select_tag("datesReportType", options_for_select([["perDay"],["perMonth"]], params[:datesReportType]), class: 'flex block shadow rounded-md border border-gray-200 outline-none m-2 pl-2') %>
-      <button class="rounded-lg p-2 bg-blue-600 h-full text-white inline-block font-medium cursor-pointer" type="submit" formaction="/reports/report_by_dates">Get a report</button>
-    </div>
-  <% end %>
-</div>
+  <div class="container text-center">
+    <%= form_tag '',method: :get do %>
+      <div class="flex flex-wrap justify-center items-center">
+        <%= date_field_tag(:start_odate, params[:start_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
+        <%= date_field_tag(:end_odate, params[:end_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
+        <%= select_tag("datesReportType", options_for_select([["perDay"],["perMonth"]], params[:datesReportType]), class: 'flex block shadow rounded-md border border-gray-200 outline-none m-2 pl-2') %>
+        <button class="rounded-lg p-2 bg-blue-600 h-full text-white inline-block font-medium cursor-pointer" type="submit" formaction="/reports/report_by_dates">Get a report</button>
+      </div>
+    <% end %>
+  </div>
 
-<div class="flex " id="div_with_myChartReport">
-  <canvas id="myChartReportDates"></canvas>
-</div>
+  <div class="flex " id="div_with_myChartReport">
+    <canvas id="myChartReportDates"></canvas>
+  </div>
 
-<!--Table-->
+  <!--Table-->
 
-<div class="flex flex-wrap justify-center m-5">
-  <div>
+  <div class="flex flex-wrap justify-center m-5">
     <table class="text-sm text-left text-gray-500 dark:text-gray-400 max-w-xs">
       <thead class="text-lg text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -61,6 +59,7 @@
     </table>
   </div>
   <!--Table end-->
+</div>
 
 <!--Scripts-->
 
@@ -72,6 +71,7 @@
             type: 'line',
             data: {
                 labels: [
+                    'zero',
                     <% @records_report_by_dates.keys.each do |day| %>
                     '<%= day %>',
                     <% end %>
@@ -79,6 +79,7 @@
                 datasets: [{
                     label: 'Sum amount <%= params[:datesReportType] %>',
                     data: [
+                        0,
                         <% @records_report_by_dates.values.each do |amount_per_day| %>
                         <%= amount_per_day %>,
                         <% end %>
