@@ -54,28 +54,20 @@ class Operation < ApplicationRecord
 
     resultHashByDates = Hash.new
 
+    operationsByDates.each do |operation|
 
-    if datesReportType == 'perDay'
-      # per day
-      operationsByDates.each do |operation|
-       onlyOdate = operation.odate.to_date.to_s
-
-        if resultHashByDates[onlyOdate].nil?
-          resultHashByDates[onlyOdate] = operation.amount
-        else
-          resultHashByDates[onlyOdate] = resultHashByDates[onlyOdate] + operation.amount
-        end
+      if datesReportType == 'perDay'
+        # per day
+        odateString = operation.odate.to_date.to_s
+      else
+        # per month
+        odateString = operation.odate.to_date.strftime("%B %Y") # return only month and year
       end
-    else
-      # per month
-      operationsByDates.each do |operation|
-        monthAndYear = operation.odate.to_date.strftime("%B %Y") # return only month and year
 
-        if resultHashByDates[monthAndYear].nil?
-          resultHashByDates[monthAndYear] = operation.amount
-        else
-          resultHashByDates[monthAndYear] = resultHashByDates[monthAndYear] + operation.amount
-        end
+      if resultHashByDates[odateString].nil?
+        resultHashByDates[odateString] = operation.amount
+      else
+        resultHashByDates[odateString] = resultHashByDates[odateString] + operation.amount
       end
     end
 
