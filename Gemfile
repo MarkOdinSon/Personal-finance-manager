@@ -50,6 +50,10 @@ gem "bootsnap", require: false
 
 gem 'faker'
 
+# For add context to test and relation testing
+gem 'shoulda-context', '~> 2.0'
+gem 'shoulda-matchers', '~> 5.0'
+
 # Paginator [https://github.com/kaminari/kaminari]
 gem 'kaminari'
 
@@ -76,10 +80,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-
-  # For add context to test and relation testing
-  gem 'shoulda-context', '~> 2.0'
-  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :production do

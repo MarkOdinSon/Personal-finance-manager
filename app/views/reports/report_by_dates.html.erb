@@ -12,7 +12,7 @@
       <div class="flex flex-wrap justify-center items-center">
         <%= date_field_tag(:start_odate, params[:start_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
         <%= date_field_tag(:end_odate, params[:end_odate], required: true, class: "flex block shadow rounded-md border border-gray-200 outline-none m-2") %>
-        <%= select_tag("datesReportType", options_for_select([["perDay"],["perMonth"]], params[:datesReportType]), class: 'flex block shadow rounded-md border border-gray-200 outline-none m-2 pl-2') %>
+        <%= select_tag("datesReportType", options_for_select([["perMonth"],["perDay"]], params[:datesReportType]), class: 'flex block shadow rounded-md border border-gray-200 outline-none m-2 pl-2') %>
         <button class="rounded-lg p-2 bg-blue-600 h-full text-white inline-block font-medium cursor-pointer" type="submit" formaction="/reports/report_by_dates">Get a report</button>
       </div>
     <% end %>
