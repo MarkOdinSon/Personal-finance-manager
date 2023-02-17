@@ -16,7 +16,7 @@ two:
 
 three:
   id: 3
-  amount: 170.95
+  amount: 250.50
   odate: 2023-01-08 12:25:19
   description: Опис витрати
   category_id: 1

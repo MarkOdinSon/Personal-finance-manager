@@ -26,7 +26,7 @@ class CategoryTest < ActiveSupport::TestCase
 
   context 'scope(methods) testing' do
     should 'be able to search categories by name using scope' do
-      assert_equal('Medications', Category.search_by_category_name_scope('Medications').pluck(:name)[0])
+      assert_equal('Garbage collection', Category.search_by_category_name_scope('Garbage collection').pluck(:name)[0])
     end
   end
 
