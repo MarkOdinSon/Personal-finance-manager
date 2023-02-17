@@ -24,6 +24,12 @@
 ![image](https://github.com/MarkOdinSon/Personal-finance-manager/blob/main/app/assets/images/page_screenshots/report_by_dates_per_days.png)
 <br><br>
 ![image](https://github.com/MarkOdinSon/Personal-finance-manager/blob/main/app/assets/images/page_screenshots/report_by_dates_per_months_big.png)
+<br><br>
+![image](https://github.com/MarkOdinSon/Personal-finance-manager/blob/main/app/assets/images/page_screenshots/search_field#1.jpg)
+<br><br>
+![image](https://github.com/MarkOdinSon/Personal-finance-manager/blob/main/app/assets/images/page_screenshots/search_field#2.jpg)
+<br><br>
+![image](https://github.com/MarkOdinSon/Personal-finance-manager/blob/main/app/assets/images/page_screenshots/search_field#3.jpg)
 
 # About author
 - Mark Hladkov (web developer) | [Telegram](https://t.me/MarkOdinSon)
